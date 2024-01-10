@@ -1,12 +1,13 @@
 # proyectot-vue
 
-This template should help get you started developing with Vue 3 in Vite.
+Este proyecto es el primer peldaño a subir para aprender lo necesario de VueJS en su versión 3 se abarcará desde sus inicios hasta el despliegue de las prácticas que han sido realizadas en el archivo DOCS
 
-## Recommended IDE Setup
+## Se recomienda utilizar la siguiente configuración para VSCODE
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[VSCode](https://code.visualstudio.com/) + [Vetur] Name: Vetur (https://marketplace.visualstudio.com/items?itemName=octref.vetur)
 
 ## Customize configuration
+El proyecto está hecho con Vite para agilizar el desarrollo.
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 

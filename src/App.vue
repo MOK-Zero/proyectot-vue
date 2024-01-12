@@ -1,47 +1,35 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import PrimerEj from './components/PrimerEj.vue'
+  import SegundoEj from './components/SegundoEj.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    
+    <main>
+        <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+        <!-- 
+        <PrimerEj titulo="Primer ejercicio interpolación en Vue" />
+         -->
+        <SegundoEj msg="Probando el ciclo de vida de VueJS" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+    </main>
+
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+header{
+  margin: 2rem auto 2rem;
+  display: block;
 }
-
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  margin: 2rem auto 2rem;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+main {
+  display: block;
+}
+a {
+  border: 1px solid green;  
 }
 </style>

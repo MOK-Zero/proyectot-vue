@@ -1,6 +1,7 @@
 <script setup>
   import PrimerEj from './components/PrimerEj.vue'
-  import SegundoEj from './components/SegundoEj.vue'
+  import CicloVida from './components/CicloVida.vue'
+  import ToDoEj from './components/ToDoEj.vue'
 </script>
 
 <template>
@@ -8,10 +9,10 @@
     <main>
         <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
         <!-- 
-        <PrimerEj titulo="Primer ejercicio interpolación en Vue" />
-         -->
-        <SegundoEj msg="Probando el ciclo de vida de VueJS" />
-
+        <PrimerEj titulo="Primer ejercicio interpolación en Vue" /> 
+        <CicloVida msg="Probando el ciclo de vida de VueJS" />
+        -->
+        <ToDoEj />
 
     </main>
 

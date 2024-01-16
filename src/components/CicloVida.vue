@@ -1,22 +1,19 @@
 <template>
-  <div class="hello">
-    <h1>CICLO DE VIDA</h1>
+  <div class="contenedor">
+    <h1>Ejercicio 2 <strong>CICLO DE VIDA</strong></h1>
     <h1>{{ msg }}</h1>
-
-
     <h2>{{ mensaje }}</h2>
     <h1 @click="incrementa" >{{ variable }}</h1>
-   
   </div>
 </template>
 
 <script>
 export default {
 
-  name: 'HelloWorld',
+  name: 'CicloVida',
   
   props: {
-    msg: String
+    titulo: String
   },
 
   data() {
@@ -85,6 +82,10 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.contenedor{
+  text-align: center;
+}
+
 h3 {
   margin: 40px 0 0;
 }

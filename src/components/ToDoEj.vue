@@ -1,38 +1,34 @@
 <template>
 
     <div>
-        <h2>Lista de Tareas</h2>
+        <h2>Lista de Tareas <button @click="agregarTarea('Tarea Nueva', 'Descripcion')">Agregar Nueva</button></h2> <!--- TODO: Definir estilos sobre la lisa -->
         <ul>
-            <li v-for="tarea in listaTareas" :key="tarea.id">
-                {{ tarea.titulo }} - {{ tarea.descripcion }} - {{ tarea.estado ? 'Completada' : 'Pendiente' }}
-                <button @click="agregarTarea('Esta es una prueba', 'descripcion de prueba')"> Editar Tarea </button>
-            </li>            
+            <li v-if="listaTareas.length > 0" v-for="tarea in listaTareas" :key="tarea.id"> <!-- Si la lista esta vacia no se ejecuta el For -->
+                <span>{{ tarea.titulo }}</span> - <span>{{ tarea.descripcion }}</span> - {{ tarea.estado ? 'Completada' : 'Pendiente' }}
+                <button> Editar Tarea </button> <!--- TODO: Habiliitar la funcionaliidad de edicion, se recomienda agregar la propiedad editable a los nodos SPAN -->
+                <button @click="eliminarTarea(tarea.id)">X</button>
+            </li>
+            <div v-else>
+                Sin Tareas
+            </div>      
         </ul>
     </div>
-    <p>Hola mundo</p>
 
 </template>
 <script setup>
     import { ref, reactive } from "vue"
     import Tarea from "./clasesjs/Tarea"
 
-    const tarea1 = new Tarea(1, "Tarea UNO prueba", "Tarea UNO prueba");
-    const tarea2 = new Tarea(2, "Tarea DOS prueba", "Tarea DOS prueba");
-    const tarea3 = new Tarea(3, "Tarea TRES prueba", "Tarea TRES prueba");
-    const tarea4 = new Tarea(4, "Tarea CUATRO prueba", "Tarea CUATRO prueba");
-    const tarea5 = new Tarea(5, "Tarea CINCO prueba", "Tarea CINCO prueba");
-
-    const listaTareas = ref([tarea1, tarea2, tarea3, tarea4, tarea5])
+    const listaTareas = ref([])
 
     console.log("CONTENIDO LISTA DE TAREAS AL CREAR")
     console.log(listaTareas)
 
 
     // Agrega las tareas a la lista
-    // listaTareas.value.push(tarea1, tarea2, tarea3, tarea4, tarea5);
     function agregarTarea(titulo, descripcion){
         if( (titulo != undefined && titulo != "") ){
-            const id = listaTareas.length + 1
+            const id = listaTareas.length ? listaTareas.length + 1 : 0
             const nuevaTarea = new Tarea(id, titulo, descripcion)
             listaTareas.value.push(nuevaTarea)
 
@@ -41,13 +37,13 @@
         }
 
         console.log("CONTENIDO LISTA DE TAREAS AL AGREGAR")
-        console.log(listaTareas)
+        console.debug(listaTareas.value)
     }
 
     function eliminarTarea(id){
-        const indice = listaTareas.findIndex(tarea => tarea.id === id);
+        const indice = listaTareas.value.findIndex(tarea => tarea.id === id);
         if( indice != -1){
-            listaTareas.splice(indice, 1)
+            listaTareas.value.splice(indice, 1)
         }else{
             alert("El indice no fue encontrado");
         }

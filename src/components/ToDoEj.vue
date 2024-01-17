@@ -2,16 +2,16 @@
 
     <div>
         <h2>Lista de Tareas <button @click="agregarTarea('Tarea Nueva', 'Descripcion')">Agregar Nueva</button></h2> <!--- TODO: Definir estilos sobre la lisa -->
-        <ul>
-            <li v-if="listaTareas.length > 0" v-for="tarea in listaTareas" :key="tarea.id"> <!-- Si la lista esta vacia no se ejecuta el For -->
+        <ul v-if=" listaTareas.length>0 ">
+            <li v-for="tarea in listaTareas" :key="tarea.id"> <!-- Si la lista esta vacia no se ejecuta el For -->
                 <span>{{ tarea.titulo }}</span> - <span>{{ tarea.descripcion }}</span> - {{ tarea.estado ? 'Completada' : 'Pendiente' }}
                 <button> Editar Tarea </button> <!--- TODO: Habiliitar la funcionaliidad de edicion, se recomienda agregar la propiedad editable a los nodos SPAN -->
                 <button @click="eliminarTarea(tarea.id)">X</button>
             </li>
-            <div v-else>
-                Sin Tareas
-            </div>      
         </ul>
+        <div v-else>
+            Sin Tareas
+        </div>   
     </div>
 
 </template>

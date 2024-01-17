@@ -5,6 +5,7 @@
         <button @click="agregarTarea('Tarea Nueva', 'Descripcion')">Agregar Nueva</button>
         </h2>
 
+        <!-- 
         <ul v-if="listaTareas.length > 0">
             <li v-for="tarea in listaTareas" :key="tarea.id">
                 <span>{{tarea.titulo}}</span> <span>{{ tarea.descripcion }}</span> - {{ tarea.estado ? 'Completada' : 'Pendiente' }}    
@@ -13,6 +14,7 @@
         <div v-else>
             <h1>No hay ninguna tarea que mostrar</h1>
         </div>
+        -->
     </div>
     
 
@@ -21,7 +23,7 @@
     import { ref, reactive } from "vue"
     import Tarea from "./clasesjs/Tarea"
 
-    const listaTareas = ref([])
+    listaTareas = ref([])
 
     const tarea1 = new Tarea(1, "Tarea UNO prueba", "Tarea UNO prueba");
     const tarea2 = new Tarea(2, "Tarea DOS prueba", "Tarea DOS prueba");
@@ -32,11 +34,10 @@
     console.log("CONTENIDO LISTA DE TAREAS AL CREAR")
     console.log(listaTareas.value)
 
-
-
-
     // Agrega las tareas a la lista
-    // listaTareas.value.push(tarea1, tarea2, tarea3, tarea4, tarea5);
+    listaTareas.value.push(tarea1, tarea2, tarea3, tarea4, tarea5);
+    
+    /*
     function agregarTarea(titulo, descripcion){
         if( (titulo != undefined && titulo != "") ){
             const id = listaTareas.length + 1
@@ -87,5 +88,6 @@
             tarea.estado = nuevoEstado
         }
     }
+    */
 
 </script>

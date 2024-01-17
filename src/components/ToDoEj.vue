@@ -1,20 +1,27 @@
 <template>
 
     <div>
-        <h2>Lista de Tareas</h2>
-        <ul>
+        <h2>Lista de Tareas
+        <button @click="agregarTarea('Tarea Nueva', 'Descripcion')">Agregar Nueva</button>
+        </h2>
+
+        <ul v-if="listaTareas.length > 0">
             <li v-for="tarea in listaTareas" :key="tarea.id">
-                {{ tarea.titulo }} - {{ tarea.descripcion }} - {{ tarea.estado ? 'Completada' : 'Pendiente' }}
-                <button @click="agregarTarea('Esta es una prueba', 'descripcion de prueba')"> Editar Tarea </button>
-            </li>            
+                <span>{{tarea.titulo}}</span> <span>{{ tarea.descripcion }}</span> - {{ tarea.estado ? 'Completada' : 'Pendiente' }}    
+            </li>          
         </ul>
+        <div v-else>
+            <h1>No hay ninguna tarea que mostrar</h1>
+        </div>
     </div>
-    <p>Hola mundo</p>
+    
 
 </template>
 <script setup>
     import { ref, reactive } from "vue"
     import Tarea from "./clasesjs/Tarea"
+
+    const listaTareas = ref([])
 
     const tarea1 = new Tarea(1, "Tarea UNO prueba", "Tarea UNO prueba");
     const tarea2 = new Tarea(2, "Tarea DOS prueba", "Tarea DOS prueba");
@@ -22,10 +29,10 @@
     const tarea4 = new Tarea(4, "Tarea CUATRO prueba", "Tarea CUATRO prueba");
     const tarea5 = new Tarea(5, "Tarea CINCO prueba", "Tarea CINCO prueba");
 
-    const listaTareas = ref([tarea1, tarea2, tarea3, tarea4, tarea5])
-
     console.log("CONTENIDO LISTA DE TAREAS AL CREAR")
-    console.log(listaTareas)
+    console.log(listaTareas.value)
+
+
 
 
     // Agrega las tareas a la lista

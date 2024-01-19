@@ -8,14 +8,34 @@
         <h1>Indice a editar {{editando}}</h1>
         <ul v-if=" listaTareas.length>0 ">
             <li v-for="(tarea, index) in listaTareas" :key="tarea.id">
-              <span> {{tarea.id}} {{ tarea.titulo }}</span> - <span>{{ tarea.descripcion }}</span>
+
+              <!--Referenciamos las variables con v-text para solo mostrarlas y que no estén unidas bidereccionalmente
+              de esta manera ya podemos editar sin perjudicar los setters -->  
+              
+              <!-- content editable necesita recibir una cadena con true o false pero no puede ingresar en bruto el valor (cadenita) -->
+              <span 
+                :contenteditable="edicion ? 'true' : 'false' " 
+                v-text="tarea.titulo"
+             ></span> -
+            
+            <span
+                :contenteditable="edicion ? 'true' : 'false' "
+                ref="contenidoEdicion"
+                @input="handleInputEdicion"
+                v-text="tarea.descripcion"
+                ></span>
+              
               <h1 v-if="index === editando">Estamos editando {{tarea.id}}</h1>
 
+              <!-- 
                 <button @click="completarTarea(tarea.id)">{{ tarea.estado ? 'Completada' : 'Pendiente' }}</button>
-                <button @click="iniciarEdicionTarea(tarea.id, index)"> Editar Tarea {{ editando }}</button> 
-                <!--- TODO: Habiliitar la funcionaliidad de edicion, se recomienda agregar la propiedad editable a los nodos SPAN -->
                 <button @click="eliminarTarea(tarea.id)">X</button>
 
+              -->  
+                <button @click="iniciarEdicionTarea(tarea.id, index)"> Editar Tarea {{ editando }}</button>
+                <button @click="editarTarea(tarea.id)"> Editar Tarea {{ editando }}</button> 
+                <!--- TODO: Habiliitar la funcionaliidad de edicion, se recomienda agregar la propiedad editable a los nodos SPAN -->
+                
             </li>
         </ul>
         <div v-else>
@@ -33,6 +53,12 @@
     const nuevoTitulo = ref("")
     const nuevaDescripcion = ref("")
     const editando = ref(-1)
+    const edicion = ref(true)
+
+    // Revisando esto
+    const contenidoEdicion = ref(null);
+    
+    const textoEdicion = ref("")
 
     console.log("CONTENIDO LISTA DE TAREAS AL CREAR")
     console.log(listaTareas)
@@ -84,14 +110,24 @@
         }
     }
 
-    function editarTarea(id, nuevoTitulo, nuevaDescripcion, nuevoEstado){
+    function handleInputEdicion(event){
+        textoEdicion.value = event.target.innerHTML
+        console.log(textoEdicion.value)
+    }
+
+    // argumentos previos                           id, nuevoTitulo, nuevaDescripcion, nuevoEstado
+    function editarTarea(id){
         const tarea = listaTareas.value.find(tarea => tarea.id === id);
+
         if(tarea){
+            console.log(contenidoEdicion)
+            /*
             if(nuevoTitulo != undefined && nuevoTitulo != ""){
                 tarea.titulo = nuevoTitulo;
                 tarea.descripcion = nuevaDescripcion;
                 tarea.estado = nuevoEstado;
             }
+            */
         }else{
             alert("No se encontró ninguna tarea con el id"+id)
         }

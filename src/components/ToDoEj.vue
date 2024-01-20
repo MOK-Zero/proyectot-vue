@@ -1,40 +1,37 @@
 <template>
 
     <div>
-        <h2>Lista de Tareas <button @click="agregarTarea('Tarea Nueva', 'Descripcion')">Agregar Nueva</button></h2>
+        <h2>Lista de Tareas <button @click="agregarTarea('Tarea Nueva', 'Descripcion')">Agregar con platilla</button></h2>
         <h2>Agregue un titulo: </h2> <input type="text" v-model="nuevoTitulo">
         <h2>Agregue una descripcion: </h2> <input type="text" v-model="nuevaDescripcion">
-        <button @click="agregarTarea(nuevoTitulo, nuevaDescripcion)">Agregar una nueva tarea</button>
-        <h1>Indice a editar {{editando}}</h1>
+        <button @click="agregarTarea(nuevoTitulo, nuevaDescripcion)">Agregar esta tarea</button>
         <ul v-if=" listaTareas.length>0 ">
-            <li v-for="(tarea, index) in listaTareas" :key="tarea.id">
+            <li v-for="(tarea, index) in listaTareas" :key="tarea.id" :data-id="tarea.id" ref="refsLiNodes">
 
-              <!--Referenciamos las variables con v-text para solo mostrarlas y que no estén unidas bidereccionalmente
-              de esta manera ya podemos editar sin perjudicar los setters -->  
-              
-              <!-- content editable necesita recibir una cadena con true o false pero no puede ingresar en bruto el valor (cadenita) -->
+              <!-- TODO: Utilizar un estilo mas agradable cuando el elemento este en edicion -->
               <span 
-                :contenteditable="edicion ? 'true' : 'false' " 
+                :contenteditable="!!tarea.inEdit" 
+                :style="{'border': !!tarea.inEdit ? '1px solid red' : ''}" 
                 v-text="tarea.titulo"
-             ></span> -
+             ></span>  -  
             
             <span
-                :contenteditable="edicion ? 'true' : 'false' "
-                ref="contenidoEdicion"
-                @input="handleInputEdicion"
+                :contenteditable="!!tarea.inEdit"
+                :style="{'border': !!tarea.inEdit ? '1px solid red' : ''}"
                 v-text="tarea.descripcion"
-                ></span>
-              
-              <h1 v-if="index === editando">Estamos editando {{tarea.id}}</h1>
+                >
+            </span>  
 
               <!-- 
                 <button @click="completarTarea(tarea.id)">{{ tarea.estado ? 'Completada' : 'Pendiente' }}</button>
-                <button @click="eliminarTarea(tarea.id)">X</button>
+
 
               -->  
-                <button @click="iniciarEdicionTarea(tarea.id, index)"> Editar Tarea {{ editando }}</button>
-                <button @click="editarTarea(tarea.id)"> Editar Tarea {{ editando }}</button> 
-                <!--- TODO: Habiliitar la funcionaliidad de edicion, se recomienda agregar la propiedad editable a los nodos SPAN -->
+                <!-- <button @click="iniciarEdicionTarea(tarea.id, index)"> Editar Tarea {{ editando }}</button> -->
+                <button v-if="!!!tarea.inEdit" @click="activeEdit(tarea.id)"> Editar Tarea</button>
+                <button v-else @click="saveTodo(tarea.id)"> Guardar tarea</button>
+                <!-- <button @click="editarTarea(tarea.id)"> Guardar Tarea {{ editando }}</button>  -->
+                <button @click="eliminarTarea(tarea.id)">X</button>
                 
             </li>
         </ul>
@@ -49,11 +46,11 @@
     import Tarea from "./clasesjs/Tarea"
 
     const listaTareas = ref([])
+    const refsLiNodes = ref([])
 
     const nuevoTitulo = ref("")
     const nuevaDescripcion = ref("")
-    const editando = ref(-1)
-    const edicion = ref(true)
+    // const editando = ref(-1) 
 
     // Revisando esto
     const contenidoEdicion = ref(null);
@@ -68,7 +65,7 @@
     function agregarTarea(titulo, descripcion){
         if( (titulo != undefined && titulo != "") ){
             // const id = listaTareas.value.length ? listaTareas.value.length + 1 : 0
-            const id = listaTareas.value.length + 1
+            const id = listaTareas.value.length ? listaTareas.value[listaTareas.value.length-1].id + 1 : 1
             const nuevaTarea = new Tarea(id, titulo, descripcion)
             listaTareas.value.push(nuevaTarea)
 
@@ -110,6 +107,25 @@
         }
     }
 
+    function saveTodo(id){
+        const liNode = refsLiNodes.value.find(el => el.dataset.id == id)
+        const [titleSpan, descriptionSpan] = liNode.getElementsByTagName('span')
+        const actualTodo = listaTareas.value.find(t => t.id == id)
+        actualTodo.titulo = titleSpan.innerText
+        actualTodo.descripcion = descriptionSpan.innerText
+        disableEdit(id)
+    }
+
+    function activeEdit(id){
+        const tarea = listaTareas.value.find(tarea => tarea.id === id);
+        tarea.inEdit = true
+    }
+
+    function disableEdit(id){
+        const tarea = listaTareas.value.find(tarea => tarea.id === id);
+        tarea.inEdit = false
+    }
+
     function handleInputEdicion(event){
         textoEdicion.value = event.target.innerHTML
         console.log(textoEdicion.value)
@@ -143,5 +159,11 @@
             tarea.estado = !tarea.estado
         }
     }
+
+    function printTodos(){
+        console.log(listaTareas.value)
+    }
+
+    window.printTodos = printTodos //TODO: Eliminar funcion, solo para funciones de depuracion
 
 </script>

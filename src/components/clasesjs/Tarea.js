@@ -15,6 +15,7 @@ export default class Tarea {
         this._titulo = titulo
         this._descripcion = descripcion
         this._estado = false
+        this._inEdit = false
     }
 
     get id() {
@@ -50,5 +51,13 @@ export default class Tarea {
         }else{
             throw new Error("El estado solo puede ser true o false")
         }
+    }
+
+    get inEdit(){
+        return this._inEdit
+    }
+
+    set inEdit(value){
+        this._inEdit = !!value 
     }
 }
